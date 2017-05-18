@@ -2,6 +2,7 @@
 #define __BD_SO_BROADCASTCENTER__
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <string>
 const int MAXDATASIZE = 256;
 namespace bd_so {
 	class BroadcastCenter {
@@ -19,7 +20,7 @@ namespace bd_so {
 		BroadcastCenter(bool is_s):is_sender(is_s) {
 			init_addr();
 		}		
-		void startSend(void); 
+		void startSend(std::string msg); 
 		void startReceiving(void);	
 	};
 };
