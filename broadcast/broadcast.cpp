@@ -9,22 +9,22 @@ const int PORT = 7773;
 const int PORT = 7774;
 #endif
 void bd_so::BroadcastCenter::startSend(std::string msg) {
-	if(this->is_casting || !this->is_sender || this->is_receiving) {
-		std::cerr << "isn't a client or is broadcasting" << std::endl;
-		return;
-	}else {
+//	if(this->is_casting || !this->is_sender || this->is_receiving) {
+//		std::cerr << "isn't a client or is broadcasting" << std::endl;
+//		return;
+//	}else {
 		this->is_casting = true;
 		strcpy(buf,msg.c_str());
 		sendto(socket_fd,buf,strlen(buf),0,(struct sockaddr *)&my_addr,sizeof(my_addr));
 		this->is_casting = false;
-	}
+//	}
 }
 
 void bd_so::BroadcastCenter::init_addr() {
 	my_addr.sin_family = AF_INET;
 	my_addr.sin_port = htons(PORT); 
-	//std::string bd_address = boardcast_addr();
-	my_addr.sin_addr.s_addr = inet_addr("255.255.255.255");
+	std::string bd_address = boardcast_addr();
+	my_addr.sin_addr.s_addr = inet_addr(bd_address.c_str());
 	
 	user_addr.sin_family = AF_INET;
 	user_addr.sin_port = htons(PORT); 
@@ -48,6 +48,8 @@ void bd_so::BroadcastCenter::startReceiving() {
 	}
 	this->is_receiving = true;
 	socklen_t size = sizeof(user_addr);
+	startSend("hello");
+	startSend("end");
 	recvfrom(socket_fd,buf,MAXDATASIZE,0,(struct sockaddr *)&user_addr,&size);
 	std::cout<<"buffer:"<<std::string(buf)<<std::endl;
 	strcpy(my_ip,inet_ntoa(user_addr.sin_addr));
