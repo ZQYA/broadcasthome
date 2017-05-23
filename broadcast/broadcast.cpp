@@ -3,21 +3,12 @@
 #include <iostream>
 #include <netdb.h>
 #include <sys/socket.h>
-#ifndef SENDER
-const int PORT = 7773;
-#else 
 const int PORT = 7774;
-#endif
 void bd_so::BroadcastCenter::startSend(std::string msg) {
-//	if(this->is_casting || !this->is_sender || this->is_receiving) {
-//		std::cerr << "isn't a client or is broadcasting" << std::endl;
-//		return;
-//	}else {
-		this->is_casting = true;
-		strcpy(buf,msg.c_str());
-		sendto(socket_fd,buf,strlen(buf),0,(struct sockaddr *)&my_addr,sizeof(my_addr));
-		this->is_casting = false;
-//	}
+	this->is_casting = true;
+	strcpy(buf,msg.c_str());
+	sendto(socket_fd,buf,strlen(buf),0,(struct sockaddr *)&my_addr,sizeof(my_addr));
+	this->is_casting = false;
 }
 
 void bd_so::BroadcastCenter::init_addr() {
