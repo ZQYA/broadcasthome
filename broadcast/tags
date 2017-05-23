@@ -1,0 +1,27 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BroadcastCenter	./broadcast.hpp	/^		BroadcastCenter(bool is_s):is_sender(is_s) {$/;"	f	class:bd_so::BroadcastCenter
+BroadcastCenter	./broadcast.hpp	/^	class BroadcastCenter {$/;"	c	namespace:bd_so
+MAXDATASIZE	./broadcast.hpp	/^const int MAXDATASIZE = 256;$/;"	v
+PORT	./broadcast.cpp	/^const int PORT = 0; \/\/使用动态接口，防止接口被占用 $/;"	v
+__BD_SO_BROADCASTCENTER__	./broadcast.hpp	/^#define __BD_SO_BROADCASTCENTER__$/;"	d
+__BD_TOOL__	./bd_tool.hpp	/^#define __BD_TOOL__$/;"	d
+bd_so	./broadcast.hpp	/^namespace bd_so {$/;"	n
+boardcast_addr	./bd_tool.cpp	/^std::string boardcast_addr(){$/;"	f
+buf	./broadcast.hpp	/^		char buf[MAXDATASIZE];$/;"	m	class:bd_so::BroadcastCenter
+init_addr	./broadcast.cpp	/^void bd_so::BroadcastCenter::init_addr() {$/;"	f	class:bd_so::BroadcastCenter
+is_casting	./broadcast.hpp	/^		bool is_casting; \/\/\/ is sending broadcast $/;"	m	class:bd_so::BroadcastCenter
+is_receiving	./broadcast.hpp	/^		bool is_receiving; \/\/\/ is waiting broadcast$/;"	m	class:bd_so::BroadcastCenter
+is_sender	./broadcast.hpp	/^		bool is_sender; \/\/\/ is a caster;$/;"	m	class:bd_so::BroadcastCenter
+main	./main.cpp	/^int main() {$/;"	f
+my_addr	./broadcast.hpp	/^		struct sockaddr_in my_addr,user_addr;$/;"	m	class:bd_so::BroadcastCenter	typeref:struct:bd_so::BroadcastCenter::sockaddr_in
+my_ip	./broadcast.hpp	/^		char my_ip[12];$/;"	m	class:bd_so::BroadcastCenter
+so_broadcast	./broadcast.hpp	/^		int so_broadcast = 1;$/;"	m	class:bd_so::BroadcastCenter
+socket_fd	./broadcast.hpp	/^		int socket_fd;$/;"	m	class:bd_so::BroadcastCenter
+startReceiving	./broadcast.cpp	/^void bd_so::BroadcastCenter::startReceiving() {$/;"	f	class:bd_so::BroadcastCenter
+startSend	./broadcast.cpp	/^void bd_so::BroadcastCenter::startSend(std::string msg) {$/;"	f	class:bd_so::BroadcastCenter
+user_addr	./broadcast.hpp	/^		struct sockaddr_in my_addr,user_addr;$/;"	m	class:bd_so::BroadcastCenter	typeref:struct:bd_so::BroadcastCenter::

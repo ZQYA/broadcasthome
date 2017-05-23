@@ -48,8 +48,6 @@ void bd_so::BroadcastCenter::startReceiving() {
 	}
 	this->is_receiving = true;
 	socklen_t size = sizeof(user_addr);
-	startSend("hello");
-	startSend("end");
 	recvfrom(socket_fd,buf,MAXDATASIZE,0,(struct sockaddr *)&user_addr,&size);
 	std::cout<<"buffer:"<<std::string(buf)<<std::endl;
 	strcpy(my_ip,inet_ntoa(user_addr.sin_addr));
