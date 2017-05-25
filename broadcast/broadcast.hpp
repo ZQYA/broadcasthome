@@ -3,6 +3,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <string>
+#include <cstring>
 const int MAXDATASIZE = 256;
 namespace bd_so {
 	class BroadcastCenter {
