@@ -3,6 +3,8 @@
 #include <iostream>
 #include <netdb.h>
 #include <sys/socket.h>
+#include <cstdio>
+#include <cstdlib>
 const int PORT = 7774;
 void bd_so::BroadcastCenter::startSend(std::string msg) {
 	this->is_casting = true;
