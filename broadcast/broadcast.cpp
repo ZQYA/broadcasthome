@@ -15,12 +15,18 @@ void bd_so::BroadcastCenter::startSend(std::string msg) {
 
 void bd_so::BroadcastCenter::init_addr() {
 	my_addr.sin_family = AF_INET;
-	my_addr.sin_port = htons(PORT); 
+	if(this->is_sender)
+		my_addr.sin_port = htons(PORT); 
+	else 
+		my_addr.sin_port = htons(0);
 	std::string bd_address = boardcast_addr();
 	my_addr.sin_addr.s_addr = inet_addr(bd_address.c_str());
 	
 	user_addr.sin_family = AF_INET;
-	user_addr.sin_port = htons(PORT); 
+	if(this->is_sender)
+		user_addr.sin_port = htons(0); 
+	else 
+		user_addr.sin_port = htons(PORT);
 	user_addr.sin_addr.s_addr = htonl(INADDR_ANY); 
 	socket_fd = socket(AF_INET,SOCK_DGRAM,0);
 	if(-1 == socket_fd) {
