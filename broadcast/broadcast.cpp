@@ -5,7 +5,9 @@
 #include <sys/socket.h>
 #include <cstdio>
 #include <cstdlib>
+#include <pthread.h>
 const int PORT = 7774;
+std::string local_ip;
 void bd_so::BroadcastCenter::startSend(std::string msg) {
 	this->is_casting = true;
 	strcpy(buf,msg.c_str());
@@ -19,7 +21,10 @@ void bd_so::BroadcastCenter::init_addr() {
 		my_addr.sin_port = htons(PORT); 
 	else 
 		my_addr.sin_port = htons(0);
-	std::string bd_address = boardcast_addr();
+	char *ip = (char *)malloc(20);
+	bzero(ip,20);
+	std::string bd_address = boardcast_addr(ip);
+	local_ip = std::string(ip);
 	my_addr.sin_addr.s_addr = inet_addr(bd_address.c_str());
 	
 	user_addr.sin_family = AF_INET;
@@ -40,21 +45,28 @@ void bd_so::BroadcastCenter::init_addr() {
 	}
 }
 
-void bd_so::BroadcastCenter::startReceiving() {
-	if(is_sender == true || is_receiving) {
-		std::cerr << "not receiver or is receiving" << std::endl;
+
+void bd_so::startReceiving(void *) {
+	bd_so::BroadcastCenter *center = new bd_so::BroadcastCenter(false);
+	center->is_receiving = true;
+	socklen_t size = sizeof(center->user_addr);
+	recvfrom(center->socket_fd,center->buf,MAXDATASIZE,0,(struct sockaddr *)&(center->user_addr),&size);
+	strcpy(center->my_ip,inet_ntoa(center->user_addr.sin_addr));
+	while(1) {
+		bzero(center->buf,sizeof(center->buf));
+		size = sizeof(center->user_addr);
+		recvfrom(center->socket_fd,center->buf,MAXDATASIZE,0,(struct sockaddr *)&(center->user_addr),&size);
+	}
+}
+
+void bd_so::BroadcastCenter::start_listen_thread(void) {
+	pthread_t listen_th;
+	void (*func)(void *) = bd_so::startReceiving;
+	if(-1 == pthread_create(&listen_th,NULL,(void * _Nullable(* _Nonnull)(void * _Nullable))func,(void *)NULL)) {
+		perror("listen thread init failed");
 		exit(1);
 	}
-	this->is_receiving = true;
-	socklen_t size = sizeof(user_addr);
-	recvfrom(socket_fd,buf,MAXDATASIZE,0,(struct sockaddr *)&user_addr,&size);
-	std::cout<<"buffer:"<<std::string(buf)<<std::endl;
-	strcpy(my_ip,inet_ntoa(user_addr.sin_addr));
-	std::cout<<std::string(my_ip)<<std::endl;
-	while(1) {
-		bzero(buf,sizeof(buf));
-		size = sizeof(user_addr);
-		recvfrom(socket_fd,buf,MAXDATASIZE,0,(struct sockaddr *)&user_addr,&size);
-		std::cout<<"buffer:"<<std::string(buf)<<std::endl;
-	}
+	int *result = new int;
+	pthread_join(listen_th,(void **)&result);
+
 }

@@ -4,7 +4,9 @@
 #include <arpa/inet.h>
 #include <string>
 #include <cstring>
+#include <strings.h>
 const int MAXDATASIZE = 256;
+extern std::string local_ip;
 namespace bd_so {
 	class BroadcastCenter {
 		private:
@@ -16,13 +18,15 @@ namespace bd_so {
 		struct sockaddr_in my_addr,user_addr;
 		char buf[MAXDATASIZE];
 		int so_broadcast = 1;
-		char my_ip[12];
+		char my_ip[20];
 		public:
 		BroadcastCenter(bool is_s):is_sender(is_s) {
 			init_addr();
 		}		
 		void startSend(std::string msg); 
-		void startReceiving(void);	
+		static void start_listen_thread(void);
+		friend void startReceiving(void *);
 	};
 };
+
 #endif

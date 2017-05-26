@@ -6,13 +6,24 @@
 !_TAG_PROGRAM_VERSION	5.8	//
 BroadcastCenter	./broadcast.hpp	/^		BroadcastCenter(bool is_s):is_sender(is_s) {$/;"	f	class:bd_so::BroadcastCenter
 BroadcastCenter	./broadcast.hpp	/^	class BroadcastCenter {$/;"	c	namespace:bd_so
+DataClient	./tcp_data_tp/data_transporter.hpp	/^	DataClient(char *server) {$/;"	f	class:bd_so::DataClient
+DataClient	./tcp_data_tp/data_transporter.hpp	/^    class DataClient  {$/;"	c	namespace:bd_so
+DirectoryOfThisScript	./.ycm_extra_conf.py	/^def DirectoryOfThisScript():$/;"	f
+FlagsForFile	./.ycm_extra_conf.py	/^def FlagsForFile( filename ):$/;"	f
 MAXDATASIZE	./broadcast.hpp	/^const int MAXDATASIZE = 256;$/;"	v
-PORT	./broadcast.cpp	/^const int PORT = 0; \/\/使用动态接口，防止接口被占用 $/;"	v
+MakeRelativePathsInFlagsAbsolute	./.ycm_extra_conf.py	/^def MakeRelativePathsInFlagsAbsolute( flags, working_directory ):$/;"	f
+PORT	./broadcast.cpp	/^const int PORT = 7774;$/;"	v
+VPATH	./makefile	/^VPATH = data_trans$/;"	m
 __BD_SO_BROADCASTCENTER__	./broadcast.hpp	/^#define __BD_SO_BROADCASTCENTER__$/;"	d
 __BD_TOOL__	./bd_tool.hpp	/^#define __BD_TOOL__$/;"	d
 bd_so	./broadcast.hpp	/^namespace bd_so {$/;"	n
+bd_so	./tcp_data_tp/data_transporter.hpp	/^namespace bd_so {$/;"	n
 boardcast_addr	./bd_tool.cpp	/^std::string boardcast_addr(){$/;"	f
 buf	./broadcast.hpp	/^		char buf[MAXDATASIZE];$/;"	m	class:bd_so::BroadcastCenter
+compilation_database_folder	./.ycm_extra_conf.py	/^compilation_database_folder = ''$/;"	v
+database	./.ycm_extra_conf.py	/^  database = None$/;"	v
+database	./.ycm_extra_conf.py	/^  database = ycm_core.CompilationDatabase( compilation_database_folder )$/;"	v
+flags	./.ycm_extra_conf.py	/^flags = [$/;"	v
 init_addr	./broadcast.cpp	/^void bd_so::BroadcastCenter::init_addr() {$/;"	f	class:bd_so::BroadcastCenter
 is_casting	./broadcast.hpp	/^		bool is_casting; \/\/\/ is sending broadcast $/;"	m	class:bd_so::BroadcastCenter
 is_receiving	./broadcast.hpp	/^		bool is_receiving; \/\/\/ is waiting broadcast$/;"	m	class:bd_so::BroadcastCenter
@@ -20,8 +31,13 @@ is_sender	./broadcast.hpp	/^		bool is_sender; \/\/\/ is a caster;$/;"	m	class:bd
 main	./main.cpp	/^int main() {$/;"	f
 my_addr	./broadcast.hpp	/^		struct sockaddr_in my_addr,user_addr;$/;"	m	class:bd_so::BroadcastCenter	typeref:struct:bd_so::BroadcastCenter::sockaddr_in
 my_ip	./broadcast.hpp	/^		char my_ip[12];$/;"	m	class:bd_so::BroadcastCenter
+objects	./makefile	/^objects = $(patsubst %.cpp,%.o,$(wildcard *.cpp)) $/;"	m
+os	./.ycm_extra_conf.py	/^import os$/;"	i
+server_ip	./tcp_data_tp/data_transporter.hpp	/^    char *server_ip;$/;"	m	class:bd_so::DataClient
 so_broadcast	./broadcast.hpp	/^		int so_broadcast = 1;$/;"	m	class:bd_so::BroadcastCenter
 socket_fd	./broadcast.hpp	/^		int socket_fd;$/;"	m	class:bd_so::BroadcastCenter
+sources	./makefile	/^sources = $(wildcard *.cpp)$/;"	m
 startReceiving	./broadcast.cpp	/^void bd_so::BroadcastCenter::startReceiving() {$/;"	f	class:bd_so::BroadcastCenter
 startSend	./broadcast.cpp	/^void bd_so::BroadcastCenter::startSend(std::string msg) {$/;"	f	class:bd_so::BroadcastCenter
 user_addr	./broadcast.hpp	/^		struct sockaddr_in my_addr,user_addr;$/;"	m	class:bd_so::BroadcastCenter	typeref:struct:bd_so::BroadcastCenter::
+ycm_core	./.ycm_extra_conf.py	/^import ycm_core$/;"	i

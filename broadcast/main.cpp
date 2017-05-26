@@ -10,8 +10,7 @@ int main() {
 	bd_so::BroadcastCenter center(true);
 	center.startSend("hello");
 #else 
-	bd_so::BroadcastCenter center(false);
-	center.startReceiving();
+	bd_so::BroadcastCenter::start_listen_thread();
 #endif
 	return 1;
 }
