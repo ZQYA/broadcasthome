@@ -6,7 +6,6 @@
 #include <cstring>
 #include <strings.h>
 const int MAXDATASIZE = 256;
-extern std::string local_ip;
 namespace bd_so {
 	class BroadcastCenter {
 		private:

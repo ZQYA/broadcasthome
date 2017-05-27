@@ -1,6 +1,8 @@
 #include <string>
 #include <cstring>
 #include <strings.h>
+#include <cstdlib>
+
 namespace bd_so {
     class DataClient  {
     private:
