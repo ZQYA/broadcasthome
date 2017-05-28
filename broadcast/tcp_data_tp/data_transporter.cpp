@@ -11,12 +11,12 @@ void bd_so::DataClient::send_self_ip() {
     int n = 0 ; //read count;        
     int socket_fd = socket(AF_INET,SOCK_STREAM,0);
     if(-1==socket_fd) 
-       perror("tcp connect failed"), exit(1);
+       perror("tcp client socket create failed"), exit(1);
 
     sockaddr_in *server_addr = new sockaddr_in();
     bzero(server_addr,sizeof(sockaddr_in));
     (*server_addr).sin_family = AF_INET;
-    (*server_addr).sin_port = htons(8000);
+    (*server_addr).sin_port = htons(SERVER_PORT);
     (*server_addr).sin_addr.s_addr = inet_addr(server_ip);
 
     int con_stat = connect(socket_fd,(const struct sockaddr *)server_addr,(socklen_t)sizeof(sockaddr_in));
@@ -31,4 +31,41 @@ void bd_so::DataClient::send_self_ip() {
           close(socket_fd);
         }
     }
+    free(buffer);
+    delete server_addr;
 }
+
+
+bd_so::DataServer::DataServer(int p) {
+   int socket_fd = socket(AF_INET,SOCK_STREAM,0) ;
+   if( -1 == socket_fd) 
+       perror("tcp server socket create fail"),exit(1);
+   sockaddr_in *server_addr = new sockaddr_in();
+   bzero(server_addr,sizeof(sockaddr_in));
+   server_addr->sin_addr.s_addr = htonl(INADDR_ANY);
+   server_addr->sin_port = htons(p);
+   int bind_stat = bind(socket_fd,(const struct sockaddr *)server_addr,(socklen_t)sizeof(sockaddr_in)); 
+
+   if(-1 == bind_stat)
+       perror("tcp server bind fail"),exit(1);
+   int listen_stat = listen(socket_fd,10);
+   if(-1 == listen_stat)
+       perror("linsten server fail"),exit(1);           
+   while(1){
+        socklen_t socklen = sizeof(sockaddr_in);
+        int accept_stat = accept(socket_fd,(struct sockaddr *)server_addr,&socklen);
+        if(-1 == accept_stat)
+             perror("accept server fail"),exit(1);
+        int n = 0;
+        char *buffer = (char *)malloc(MAXDATASIZE+1);
+        bzero(buffer,MAXDATASIZE);
+        while((n = read(socket_fd,buffer,MAXDATASIZE))>0){
+            buffer[n] = 0; 
+            printf("buf:%s",buffer);
+            bzero(buffer,MAXDATASIZE);
+            write(socket_fd,"ok",2);//write response
+        }
+        free(buffer);
+    }  
+    delete server_addr; 
+};
