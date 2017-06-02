@@ -52,8 +52,10 @@ bd_so::DataServer::DataServer(int p) {
    if(-1 == listen_stat)
        perror("linsten server fail"),exit(1);           
    while(1){
-        socklen_t socklen = sizeof(sockaddr_in);
-        int accept_stat = accept(socket_fd,(struct sockaddr *)server_addr,&socklen);
+		sockaddr_in con_addr;
+        socklen_t socklen = sizeof(con_addr);
+		bzero(&con_addr,socklen);
+        int accept_stat = accept(socket_fd,(struct sockaddr *)(&con_addr),&socklen);
         if(-1 == accept_stat)
              perror("accept server fail"),exit(1);
         int n = 0;
