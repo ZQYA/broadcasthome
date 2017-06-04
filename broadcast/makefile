@@ -4,9 +4,9 @@ tp_objects = $(patsubst %.cpp,%.o,$(wildcard tcp_data_tp/*.cpp))
 tp_sources = $(wildcard tcp_data_tp/*.cpp)
 VPATH = data_trans
 sender: $(objects) $(tp_objects)
-	gcc -o sender.out $(objects) -l stdc++ -lpthread -DSENDER 
+	gcc -o sender.out $(objects) -l stdc++ -lpthread -DSENDER -fpack-struct=1
 receiver : $(objects)
-	gcc -o receiver.out $(objects) -l stdc++ -lpthread -USENDER 
+	gcc -o receiver.out $(objects) -l stdc++ -lpthread -USENDER -fpack-struct=1
 $(objects) : $(sources)
 ifdef SD 
 	gcc -c $^ -l stdc++ -DSENDER 
