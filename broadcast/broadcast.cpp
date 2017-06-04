@@ -68,5 +68,4 @@ void bd_so::BroadcastCenter::start_listen_thread(void) {
 	}
 	int *result = new int;
 	pthread_join(listen_th,(void **)&result);
-
 }
