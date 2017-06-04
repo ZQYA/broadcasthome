@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <cstdlib>
+#include <cstdio>
 extern std::string local_ip; 
 const int MAXTCPBUFFSIZE = 1024;
 void bd_so::DataClient::send_self_ip() {

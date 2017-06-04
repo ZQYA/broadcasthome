@@ -26,6 +26,7 @@ namespace bd_so {
 		static void start_listen_thread(void);
 		friend void startReceiving(void *);
 	};
+	void startReceiving(void *);
 };
 
 #endif

@@ -62,7 +62,7 @@ void bd_so::startReceiving(void *) {
 void bd_so::BroadcastCenter::start_listen_thread(void) {
 	pthread_t listen_th;
 	void (*func)(void *) = bd_so::startReceiving;
-	if(-1 == pthread_create(&listen_th,NULL,(void * _Nullable(* _Nonnull)(void * _Nullable))func,(void *)NULL)) {
+	if(-1 == pthread_create(&listen_th,NULL,(void* (*)(void *))func,(void *)NULL)) {
 		perror("listen thread init failed");
 		exit(1);
 	}

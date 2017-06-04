@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <arpa/inet.h>
 #include <string>
+#include <cstring>
 std::string boardcast_addr(char *ip){
 	struct ifaddrs *ifap;
 	int success = getifaddrs(&ifap);
