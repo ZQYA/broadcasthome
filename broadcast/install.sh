@@ -3,15 +3,19 @@
 curpath=$(PWD)
 cd ../../ 
 par=$(PWD)
-if [[ -d "$par/ZLTCPTransfer" ]]; then 
-        cd ZLTCPTransfer
+pull_remote() {
+reponame=$1
+if [[ -d "$par/$reponame" ]]; then 
+        cd $par/$reponame 
         git pull origin develop
 else
-        git clone git@github.com:ZQYA/ZLTCPTransfer.git --branch develop
+        git clone git@github.com:ZQYA/"$reponame".git --branch develop
 fi 
-
+}
+pull_remote "ZLTCPTransfer"
+pull_remote "MMTP"
 # make output files
-cd $(curpath)
+cd $curpath
 make clean
 make receiver
 make clean
