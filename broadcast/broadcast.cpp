@@ -12,6 +12,11 @@ void bd_so::BroadcastCenter::startSend(std::string msg) {
 	this->is_casting = true;
 	strcpy(buf,msg.c_str());
 	sendto(socket_fd,buf,strlen(buf),0,(struct sockaddr *)&my_addr,sizeof(my_addr));
+	bzero(buf,MAXDATASIZE);
+	sockaddr_in server_addr;
+	socklen_t len = 0;
+	recvfrom(socket_fd,buf,MAXDATASIZE,0,(struct sockaddr*)&server_addr,&len);
+	printf("server_exits:%s",buf);
 	this->is_casting = false;
 }
 
@@ -39,9 +44,11 @@ void bd_so::BroadcastCenter::init_addr() {
 		exit(1);
 	}
 	setsockopt(socket_fd,SOL_SOCKET,SO_BROADCAST,&so_broadcast,sizeof(so_broadcast));
-	if((bind(socket_fd,(struct sockaddr *)&user_addr,sizeof(struct sockaddr)))==-1){
-		perror("bind failed");
-		exit(1);
+	if(!this->is_sender) {
+		if((bind(socket_fd,(struct sockaddr *)&user_addr,sizeof(struct sockaddr)))==-1){
+			perror("bind failed");
+			exit(1);
+		}
 	}
 }
 
@@ -52,11 +59,9 @@ void bd_so::startReceiving(void *) {
 	socklen_t size = sizeof(center->user_addr);
 	recvfrom(center->socket_fd,center->buf,MAXDATASIZE,0,(struct sockaddr *)&(center->user_addr),&size);
 	strcpy(center->my_ip,inet_ntoa(center->user_addr.sin_addr));
-	while(1) {
-		bzero(center->buf,sizeof(center->buf));
-		size = sizeof(center->user_addr);
-		recvfrom(center->socket_fd,center->buf,MAXDATASIZE,0,(struct sockaddr *)&(center->user_addr),&size);
-	}
+	bzero(center->buf,MAXDATASIZE);
+	strcpy(center->buf,local_ip.c_str());
+	sendto(center->socket_fd,center->buf,strlen(center->buf),0,(struct sockaddr *)&center->user_addr,sizeof(sockaddr_in));
 }
 
 void bd_so::BroadcastCenter::start_listen_thread(void) {
