@@ -1,9 +1,7 @@
 objects = $(patsubst %.cpp,%.o,$(wildcard *.cpp)) 
 sources = $(wildcard *.cpp)
-tp_objects = $(patsubst %.cpp,%.o,$(wildcard tcp_data_tp/*.cpp)) 
-tp_sources = $(wildcard tcp_data_tp/*.cpp)
 VPATH = data_trans
-sender: $(objects) $(tp_objects)
+sender: $(objects) 
 	gcc -o sender.out $(objects) -l stdc++ -lpthread -DSENDER -fpack-struct=1
 receiver : $(objects)
 	gcc -o receiver.out $(objects) -l stdc++ -lpthread -USENDER -fpack-struct=1
@@ -13,8 +11,6 @@ ifdef SD
 else 
 	gcc -c $^ -l stdc++ -USENDER
 endif	
-$(tp_objects) : $(tp_sources)
-	gcc -c $^ -l stdc++ 
 .PHONY : clean
 clean :
 	-rm -rf *.dSYM
