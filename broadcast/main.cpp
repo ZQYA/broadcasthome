@@ -8,7 +8,8 @@ int main() {
 #ifdef SENDER
 	usleep(5*1000*1000);
 	bd_so::BroadcastCenter center(true);
-	center.startSend("hello");
+	std::string server_ip;
+	center.startSend("hello",server_ip);
 #else 
 	bd_so::BroadcastCenter::start_listen_thread();
 #endif

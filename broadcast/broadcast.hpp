@@ -22,7 +22,7 @@ namespace bd_so {
 		BroadcastCenter(bool is_s):is_sender(is_s) {
 			init_addr();
 		}		
-		void startSend(std::string msg); 
+		void startSend(std::string msg,std::string &server_ip); 
 		static void start_listen_thread(void);
 		friend void startReceiving(void *);
 	};

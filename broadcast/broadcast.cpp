@@ -8,7 +8,7 @@
 #include <pthread.h>
 const int PORT = 7774;
 std::string local_ip;
-void bd_so::BroadcastCenter::startSend(std::string msg) {
+void bd_so::BroadcastCenter::startSend(std::string msg,std::string &server_ip) {
 	this->is_casting = true;
 	strcpy(buf,msg.c_str());
 	sendto(socket_fd,buf,strlen(buf),0,(struct sockaddr *)&my_addr,sizeof(my_addr));
@@ -16,7 +16,8 @@ void bd_so::BroadcastCenter::startSend(std::string msg) {
 	sockaddr_in server_addr;
 	socklen_t len = 0;
 	recvfrom(socket_fd,buf,MAXDATASIZE,0,(struct sockaddr*)&server_addr,&len);
-	printf("server_exits:%s",buf);
+	server_ip = std::string(buf);
+	printf("server:ip:%s",server_ip.c_str());
 	this->is_casting = false;
 }
 
