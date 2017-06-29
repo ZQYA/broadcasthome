@@ -58,14 +58,18 @@ void bd_so::startReceiving(void *) {
 	bd_so::BroadcastCenter *center = new bd_so::BroadcastCenter(false);
 	center->is_receiving = true;
 	socklen_t size = sizeof(center->user_addr);
+LISTEN:
 	recvfrom(center->socket_fd,center->buf,MAXDATASIZE,0,(struct sockaddr *)&(center->user_addr),&size);
 	strcpy(center->my_ip,inet_ntoa(center->user_addr.sin_addr));
 	bzero(center->buf,MAXDATASIZE);
 	strcpy(center->buf,local_ip.c_str());
 	sendto(center->socket_fd,center->buf,strlen(center->buf),0,(struct sockaddr *)&center->user_addr,sizeof(sockaddr_in));
+	goto LISTEN;
 }
 
+extern void dk_deamonInit();
 void bd_so::BroadcastCenter::start_listen_thread(void) {
+	dk_deamonInit();
 	pthread_t listen_th;
 	void (*func)(void *) = bd_so::startReceiving;
 	if(-1 == pthread_create(&listen_th,NULL,(void* (*)(void *))func,(void *)NULL)) {
