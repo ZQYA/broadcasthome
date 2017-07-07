@@ -57,12 +57,15 @@ void bd_so::BroadcastCenter::init_addr() {
 
 void* build_map_ptr() {		
 	const char* home_file_path = getenv("HOME");
-	const char *filepath = "/device_ip_pair";	
+	const char *filepath = "/device_ip_pair.log";	
 	char *map_file_path= (char *)malloc(1024);
 	strcat(map_file_path,home_file_path);
 	strcat(map_file_path,filepath);
-	int map_fd = open(map_file_path,O_RDWR|O_CREAT);
-	void *ptr = mmap(NULL,4*1024*25,PROT_WRITE,MAP_SHARED,map_fd,0);
+	int map_fd = open(map_file_path,O_CREAT|O_RDWR,0777);
+	if(-1 == map_fd) {
+		perror("file des create failed");
+	}
+	void *ptr = mmap(NULL,4*1024*8,PROT_WRITE|PROT_READ,MAP_SHARED,map_fd,0);
 	return ptr;
 }
 
