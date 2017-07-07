@@ -6,8 +6,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include <pthread.h>
-#include <fcntl.h>
-#include <sys/mman.h>
 const int PORT = 7774;
 std::string local_ip;
 void bd_so::BroadcastCenter::startSend(std::string msg,std::string &server_ip) {
@@ -55,19 +53,6 @@ void bd_so::BroadcastCenter::init_addr() {
 	}
 }
 
-void* build_map_ptr() {		
-	const char* home_file_path = getenv("HOME");
-	const char *filepath = "/device_ip_pair.log";	
-	char *map_file_path= (char *)malloc(1024);
-	strcat(map_file_path,home_file_path);
-	strcat(map_file_path,filepath);
-	int map_fd = open(map_file_path,O_CREAT|O_RDWR,0777);
-	if(-1 == map_fd) {
-		perror("file des create failed");
-	}
-	void *ptr = mmap(NULL,4*1024*8,PROT_WRITE|PROT_READ,MAP_SHARED,map_fd,0);
-	return ptr;
-}
 
 void bd_so::startReceiving(void *) {
 	bd_so::BroadcastCenter *center = new bd_so::BroadcastCenter(false);
@@ -85,11 +70,6 @@ LISTEN:
 
 extern void dk_deamonInit();
 void bd_so::BroadcastCenter::start_listen_thread(void) {
-	void *ptr = build_map_ptr();
-	if(ptr == MAP_FAILED) {
-		dk_perror("map file error");
-	}
-
 	dk_deamonInit();
 	pthread_t listen_th;
 	void (*func)(void *) = bd_so::startReceiving;
